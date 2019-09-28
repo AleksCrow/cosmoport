@@ -3,14 +3,19 @@ package com.space.service;
 import com.space.model.Ship;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ShipService {
 
     List<Ship> getAll();
 
-    Ship getById(Long id);
+    List<Ship> getAllByName(int pageNumber, int pageSize, String sort);
 
-    void save(Ship ship);
+    Optional<Ship> findById(Long id);
+
+    Ship create(Ship ship);
 
     void delete(Long id);
+
+    Integer getCount();
 }

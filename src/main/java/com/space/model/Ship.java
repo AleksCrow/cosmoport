@@ -8,12 +8,10 @@ import java.util.Objects;
 @Table(name = "ship")
 public class Ship {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String planet;
-    private ShipType shipType;
+    private String shipType;
     private Date prodDate;
     private Boolean isUsed;
     private Double speed;
@@ -23,7 +21,8 @@ public class Ship {
     public Ship() {
     }
 
-    public Ship(String name, String planet, ShipType shipType, Date prodDate, Boolean isUsed, Double speed, Integer crewSize) {
+    public Ship(String name, String planet, String shipType, Date prodDate, Boolean isUsed, Double speed, Integer crewSize) {
+//        setId(id);
         this.name = name;
         this.planet = planet;
         this.shipType = shipType;
@@ -34,12 +33,13 @@ public class Ship {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -65,11 +65,11 @@ public class Ship {
 
     @Basic
     @Column(name = "shipType")
-    public ShipType getShipType() {
+    public String getShipType() {
         return shipType;
     }
 
-    public void setShipType(ShipType shipType) {
+    public void setShipType(String shipType) {
         this.shipType = shipType;
     }
 
