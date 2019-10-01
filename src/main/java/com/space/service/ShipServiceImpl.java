@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,10 +25,10 @@ public class ShipServiceImpl implements ShipService {
     }
 
     @Override
-    public List<Ship> getAllByName(int pageNumber, int pageSize, String sort) {
+    public List<Ship> getAll(int pageNumber, int pageSize, String sort, Specification<Ship> spec) {
         Pageable pageableRequest = PageRequest.of(pageNumber, pageSize, Sort.by(sort));
 
-        Page<Ship> ships = repository.findAll(pageableRequest);
+        Page<Ship> ships = repository.findAll(spec, pageableRequest);
 
         return ships.getContent();
     }
@@ -51,4 +52,9 @@ public class ShipServiceImpl implements ShipService {
     public Integer getCount() {
         return repository.findAll().size();
     }
+
+//    @Override
+//    public List<Ship> findByNameAndPlanet(String name, String planet) {
+//        return repository.findByNameAndPlanet(name, planet);
+//    }
 }

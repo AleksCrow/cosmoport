@@ -1,7 +1,11 @@
 package com.space.model;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.Objects;
 
 @Entity
@@ -22,7 +26,6 @@ public class Ship {
     }
 
     public Ship(String name, String planet, String shipType, Date prodDate, Boolean isUsed, Double speed, Integer crewSize) {
-//        setId(id);
         this.name = name;
         this.planet = planet;
         this.shipType = shipType;
@@ -45,6 +48,7 @@ public class Ship {
 
     @Basic
     @Column(name = "name")
+    @Size(min = 1, max = 50)
     public String getName() {
         return name;
     }
@@ -55,6 +59,7 @@ public class Ship {
 
     @Basic
     @Column(name = "planet")
+    @Size(min = 1, max = 50)
     public String getPlanet() {
         return planet;
     }
@@ -75,7 +80,10 @@ public class Ship {
 
     @Basic
     @Column(name = "prodDate")
+//    @Pattern(regexp = "(2[89]\\d\\d|30[01]\\d)")
     public Date getProdDate() {
+        prodDate.setMonth(Calendar.JANUARY);
+        prodDate.setDate(1);
         return prodDate;
     }
 
@@ -95,6 +103,8 @@ public class Ship {
 
     @Basic
     @Column(name = "speed")
+    @DecimalMin(value = "0.1")
+    @DecimalMax(value = "0.99")
     public Double getSpeed() {
         return speed;
     }
@@ -105,6 +115,8 @@ public class Ship {
 
     @Basic
     @Column(name = "crewSize")
+    @Range(min = 1, max = 9999)
+    @NotNull
     public Integer getCrewSize() {
         return crewSize;
     }
