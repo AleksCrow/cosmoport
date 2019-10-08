@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,8 +21,8 @@ public class ShipServiceImpl implements ShipService {
     private ShipRepository repository;
 
     @Override
-    public List<Ship> getAll() {
-        return repository.findAll();
+    public List<Ship> getAll(Specification<Ship> spec) {
+        return repository.findAll(spec);
     }
 
     @Override
@@ -39,22 +40,17 @@ public class ShipServiceImpl implements ShipService {
     }
 
     @Override
-    public Ship create(Ship ship) {
+    public Ship save(Ship ship) {
         return repository.save(ship);
     }
 
     @Override
     public void delete(Long id) {
-        repository.deleteById(id);
+         repository.deleteById(id);
     }
 
-    @Override
-    public Integer getCount() {
-        return repository.findAll().size();
+    public Ship update(Ship ship) {
+        Assert.notNull(ship, "");
+        return repository.save(ship);
     }
-
-//    @Override
-//    public List<Ship> findByNameAndPlanet(String name, String planet) {
-//        return repository.findByNameAndPlanet(name, planet);
-//    }
 }
